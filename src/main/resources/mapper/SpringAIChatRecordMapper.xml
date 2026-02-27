@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.main.demo.Mapper.SpringAIChatRecordMapper">
+
+    <insert id="insert">
+        INSERT INTO spring_ai_chat_record (id, title, user_id, type, create_time)
+        VALUES (#{id}, #{title}, #{userId}, #{type}, #{createTime})
+    </insert>
+
+    <resultMap id="MessageVOMap" type="com.main.demo.entity.vo.MessageVO">
+        <constructor>
+            <arg column="role" javaType="java.lang.String"/>
+            <arg column="content" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+
+    <select id="getMessages" resultType="com.main.demo.entity.vo.MessageVO" resultMap="MessageVOMap">
+        select sm.type as role, sm.content as content from spring_ai_chat_record sr join spring_ai_chat_memory sm on sm.conversation_id = sr.id
+        <where>
+             <if test="userId != null">
+                 and sr.user_id = #{userId}
+             </if>
+
+            <if test="type != null">
+                and sr.type=#{type}
+            </if>
+
+            <if test="chatId != null">
+                and sr.id=#{chatId}
+            </if>
+        </where>
+        order by sm.timestamp asc
+        limit 200;
+    </select>
+
+</mapper>
