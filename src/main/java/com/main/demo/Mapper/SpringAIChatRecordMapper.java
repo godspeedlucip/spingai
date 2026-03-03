@@ -13,7 +13,7 @@ public interface SpringAIChatRecordMapper {
 
     /**
      * 根据io来查询
-     * @param id
+     * @param user_id,  conversation_id
      * @return
      */
     @Select("select  count(0)  from spring_ai_chat_record where user_id=#{user_id} and id=#{conversation_id}")

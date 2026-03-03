@@ -1,5 +1,7 @@
 package com.main.demo.Configuration;
 
+import com.main.demo.Constant.SystemConstants;
+import com.main.demo.tool.CourseTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientRequest;
 import org.springframework.ai.chat.client.ChatClientResponse;
@@ -23,6 +25,9 @@ public class CommonConfiguration {
 
     @Autowired
     ChatMemoryRepository chatMemoryRepository; //默认是InMemoryRepository
+
+    @Autowired
+    CourseTools courseTools;
 
     @Bean
     public ChatMemory inmemory_chatMemory(ChatMemoryRepository repo) {
@@ -61,6 +66,19 @@ public class CommonConfiguration {
                         new SimpleLoggerAdvisor(),
                         MessageChatMemoryAdvisor.builder(inmemory_chatMemory(chatMemoryRepository)).build()
                 )
+                .build();
+    }
+
+    @Bean
+    public ChatClient service_chatClient(OpenAiChatModel model) {
+        return ChatClient.builder(model)
+                .defaultSystem(SystemConstants.SERVICE_SYSTEM_PROMPT)
+//                .defaultSystem("你是一个可爱的萌妹子，用可爱的语气说话")
+                .defaultAdvisors(
+                        new SimpleLoggerAdvisor(),
+                        MessageChatMemoryAdvisor.builder(inmemory_chatMemory(chatMemoryRepository)).build()
+                )
+                .defaultTools(courseTools)
                 .build();
     }
 }

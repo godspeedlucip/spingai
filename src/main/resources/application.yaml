@@ -32,11 +32,14 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+#logging:
+#  level:
+#    org.springframework.ai: debug
+#    com.main.springai: debug
+
 logging:
   level:
     org.springframework.ai: debug
-    com.main.springai: debug
-
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
