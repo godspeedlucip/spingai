@@ -18,12 +18,15 @@ spring:
           model: qwen3-next-80b-a3b-instruct
           extra-body:
             enable_thinking: true
-
         memory:
           repository:
             jdbc:
               initialize-schema: always # 自动建表
               schema: classpath:sql/chatHistory.sql # 建表脚本
+      embedding:
+        options:
+          model: text-embedding-v3
+          dimensions: 1024
 
 
   datasource:

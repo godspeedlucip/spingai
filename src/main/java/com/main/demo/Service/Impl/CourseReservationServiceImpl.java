@@ -18,7 +18,7 @@ public class CourseReservationServiceImpl implements CourseReservationService {
      * @return
      */
     @Override
-    public int add(CourseReservation courseReservation){
-        return courseReservationMapper.add(courseReservation);
+    public void add(CourseReservation courseReservation){
+        courseReservationMapper.add(courseReservation);
     }
 }

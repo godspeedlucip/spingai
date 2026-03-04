@@ -12,5 +12,5 @@ public interface CourseReservationMapper {
      * @param courseReservation
      * @return
      */
-    int add(CourseReservation courseReservation);
+    void add(CourseReservation courseReservation);
 }

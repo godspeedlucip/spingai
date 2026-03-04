@@ -42,25 +42,18 @@ public class CourseTools {
     }
 
     @Tool(description = "生成课程预约单")
-    public String genCourseReservation(@ToolParam(description = "预约课程名称") String courseName,
+    public String genCourseReservation(@ToolParam(description = "课程名称") String courseName,
                                 @ToolParam(description = "学生姓名") String studentName,
                                 @ToolParam(description = "联系电话") String contactInfo,
-                                @ToolParam(description = "校区")String school,
+                                @ToolParam(description = "校区") String school,
                                 @ToolParam(description = "备注", required = false) String remark){
-//        CourseReservation courseReservation = CourseReservation.builder()
-//                .course(courseName)
-//                .studentName(studentName)
-//                .contactInfo(contactInfo)
-//                .school(school)
-//                .remark(remark)
-//                .build();
         CourseReservation courseReservation = new CourseReservation();
         courseReservation.setSchool(school);
         courseReservation.setCourse(courseName);
         courseReservation.setContactInfo(contactInfo);
         courseReservation.setRemark(remark);
-        int id = courseReservationService.add(courseReservation);
-        return String.valueOf(id);
+        courseReservation.setStudentName(studentName);
+        courseReservationService.add(courseReservation);
+        return String.valueOf(courseReservation.getId());
     }
-
 }
